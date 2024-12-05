@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Love You - Blue Flame Text and White Shooting Star</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #000;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            color: white;
+            position: relative;
+            text-align: center;
+        }
+
+        .text-container {
+            position: relative;
+            font-size: 6rem;
+            color: transparent;
+            text-align: center;
+            font-weight: bold;
+            letter-spacing: 10px;
+            z-index: 10;
+            text-shadow: 0 0 20px #00bfff, 0 0 30px #00bfff, 0 0 40px #1e90ff, 0 0 50px #1e90ff;
+        }
+
+        .star {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle 2s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% {
+                transform: scale(0.5);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+        }
+
+        @keyframes moveStars {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-5px) rotate(5deg);
+            }
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+        }
+
+        .star-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Nebula-like glow effect for stars */
+        .nebula-glow {
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.8), 0 0 30px rgba(75, 0, 130, 0.7), 0 0 60px rgba(238, 130, 238, 0.6), 0 0 100px rgba(255, 69, 0, 0.5);
+        }
+
+        /* White Shooting Star animation */
+        @keyframes shootingStar {
+            0% {
+                transform: translateX(-100vw) translateY(100vh);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(100vw) translateY(0);
+                opacity: 0;
+            }
+        }
+
+        .shooting-star {
+            position: absolute;
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(45deg, #fff, #fff); /* White shooting star */
+            animation: shootingStar 3s linear infinite;
+            z-index: 5;
+        }
+
+        .shooting-star::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-color: #fff; /* White tail for shooting star */
+            border-radius: 50%;
+            left: 50%;
+            top: -10px;
+            transform: translateX(-50%);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive typography */
+        @media (max-width: 768px) {
+            .text-container {
+                font-size: 4rem;
+            }
+
+            .shooting-star {
+                width: 100px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .text-container {
+                font-size: 3rem;
+                letter-spacing: 5px;
+            }
+
+            .shooting-star {
+                width: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="text-container">
+        <span class="star-container" id="star1">I</span>
+        <span class="star-container" id="star2"> </span>
+        <span class="star-container" id="star3">L</span>
+        <span class="star-container" id="star4">o</span>
+        <span class="star-container" id="star5">v</span>
+        <span class="star-container" id="star6">e</span>
+        <span class="star-container" id="star7"> </span>
+        <span class="star-container" id="star8">Y</span>
+        <span class="star-container" id="star9">o</span>
+        <span class="star-container" id="star10">u</span>
+    </div>
+
+    <!-- White Shooting star element -->
+    <div class="shooting-star"></div>
+
+    <script>
+        const textContainer = document.querySelector('.text-container');
+        const starElements = textContainer.querySelectorAll('.star-container');
+
+        // Function to create nebula-like stars for each letter
+        function createNebulaStarsForLetter(letterElement) {
+            const letterWidth = letterElement.offsetWidth;
+            const letterHeight = letterElement.offsetHeight;
+
+            // Generate random stars to fill the letter area
+            const numStars = 30; // Adjust this number for the density of stars
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star', 'nebula-glow');
+                const size = Math.random() * 3 + 1; // Random size for stars
+                const left = Math.random() * letterWidth; // Random position within the letter
+                const top = Math.random() * letterHeight; // Random position within the letter
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.top = `${top}px`;
+                star.style.left = `${left}px`;
+                letterElement.appendChild(star);
+
+                // Apply animation for movement to make stars twinkle and glow
+                star.style.animationDuration = `${Math.random() * 2 + 1}s`; // Random twinkle speed
+                star.style.animation = `twinkle ${Math.random() * 2 + 1}s infinite alternate, moveStars 2s ease-in-out infinite`;
+
+                // Add a random nebula color effect
+                const randomColor = `hsl(${Math.random() * 360}, 100%, 70%)`; // Random color in HSL format
+                star.style.background = randomColor;
+            }
+        }
+
+        // Create nebula-like stars for each letter in "I love you"
+        starElements.forEach(letter => {
+            createNebulaStarsForLetter(letter);
+        });
+    </script>
+
+</body>
+</html>
